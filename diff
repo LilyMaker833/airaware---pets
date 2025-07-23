@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AirAware Pets</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/icon.png" />
+</head>
+<body>
+  <header>
+    <img src="assets/dog-silhouette.svg" alt="Dog Silhouette" class="logo" />
+    <h1>AirAware Pets</h1>
+    <p class="tagline">I sniff the air to keep us both safe out there!</p>
+  </header>
+
+  <main>
+    <section class="input-area">
+      <label for="zip">Enter Your ZIP Code:</label>
+      <input type="text" id="zip" maxlength="5" placeholder="e.g. 12345" />
+      <button id="check-aqi">Check Air Quality</button>
+    </section>
+
+    <section id="aqi-info" class="hidden">
+      <h2>Air Quality Info</h2>
+      <p id="aqi-result"></p>
+      <p id="pet-advice"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data provided by <a href="https://www.airnow.gov" target="_blank">AirNow.gov</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('check-aqi').addEventListener('click', () => {
+      const zip = document.getElementById('zip').value.trim();
+      if (!/^[0-9]{5}$/.test(zip)) {
+        alert('Please enter a valid 5-digit ZIP code.');
+        return;
+      }
+
+      fetch(`https://your-cloudflare-worker-url.com?zipCode=${zip}`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.length) {
+            document.getElementById('aqi-result').textContent = 'No AQI data available.';
+            document.getElementById('pet-advice').textContent = '';
+          } else {
+            const aqi = data[0].AQI;
+            const category = data[0].Category.Name;
+
+            document.getElementById('aqi-result').textContent = `Current AQI: ${aqi} (${category})`;
+
+            let advice = '';
+            if (aqi <= 50) {
+              advice = "The air is fresh! Go for a walk.";
+            } else if (aqi <= 100) {
+              advice = "Moderate air quality. Keep activities light.";
+            } else if (aqi <= 150) {
+              advice = "Unhealthy for sensitive pets. Short outdoor time only.";
+            } else if (aqi <= 200) {
+              advice = "Air is unhealthy. Try indoor games today.";
+            } else {
+              advice = "Stay inside. It's not safe outside.";
+            }
+
+            document.getElementById('pet-advice').textContent = advice;
+          }
+
+          document.getElementById('aqi-info').classList.remove('hidden');
+        })
+        .catch(error => {
+          document.getElementById('aqi-result').textContent = 'Error fetching AQI data.';
+          document.getElementById('pet-advice').textContent = '';
+          document.getElementById('aqi-info').classList.remove('hidden');
+          console.error('Error:', error);
+        });
+    });
+  </script>
+</body>
+</html>
+pgsqi
+Add index.html
