@@ -32,4 +32,4 @@ document.getElementById("check-aqi").addEventListener("click", () => {
       alert("Something went wrong while fetching air quality data.");
     });
 });
-Add script.js
+
