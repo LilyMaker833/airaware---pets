@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AirAware Pets</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="assets/icon.png" />
+</head>
+<body>
+  <header>
+    <img src="assets/dog-silhouette.svg" alt="Dog Silhouette" class="logo" />
+    <h1>AirAware Pets</h1>
+    <p class="tagline">I sniff the air to keep us both safe out there!</p>
+  </header>
+
+  <main>
+    <section class="input-area">
+      <label for="zip">Enter Your ZIP Code:</label>
+      <input type="text" id="zip" maxlength="5" placeholder="e.g. 12345" />
+      <button id="check-aqi">Check Air Quality</button>
+    </section>
+
+    <section id="aqi-info" class="hidden">
+      <h2>Air Quality Info</h2>
+      <p id="aqi-result"></p>
+      <p id="pet-advice"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data provided by <a href="https://www.airnow.gov" target="_blank">AirNow.gov</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+Add index.html
